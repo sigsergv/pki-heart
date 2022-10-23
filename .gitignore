@@ -1,0 +1,4 @@
+*.sublime-workspace
+.venv
+__pycache__
+/pki_heart/.pki_heart_pgpass

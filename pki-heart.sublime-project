@@ -1,0 +1,22 @@
+// install sublime package: https://packagecontrol.io/packages/Jedi - Python autocompletion
+{
+	"folders":
+	[
+		{
+			"path": ".",
+			"folder_exclude_patterns": [
+				".venv",
+				"__pycache__"
+			],
+			"file_exclude_patterns": [
+				"*.sublime-workspace",
+				"*.sublime-project"
+			]
+		},
+	],
+
+	"settings": {
+		"python_virtualenv": "$project_path/.venv",
+		"python_interpreter": "$project_path/.venv/bin/python"
+	}
+}

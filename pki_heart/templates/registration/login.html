@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if not next %}
+    {% url 'films:all' as next %}
+{% endif %}
+
+<h3>Login page</h3>
+{% if form.errors %}
+    <div class="alert alert-danger mt-5 text-center" role="alert">
+        Your username and password didn't match. Please try again.
+    </div>
+{% endif %}
+
+<form method="post" action="{% url 'login' %}">
+  {% csrf_token %}
+  <input type="hidden" name="next" value="{{ next }}" />
+  <p>Login: {{form.username}}</p>
+  <p>Password: {{form.password}}</p>
+  <p><input type="submit" value="Login"></p>
+</form>
+{% endblock %}
