@@ -5,9 +5,27 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/global/css/bulma.min.css">
+    <link rel="stylesheet" href="/static/global/css/global.css">
     <title>{% block title %}{% endblock %} — PKI Heart</title>
   </head>
   <body>
+  <nav class="navbar has-shadow">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item pkih-navbar-brand" href="/ca">PKI H<x class="pkih-em">e</x>art</a>
+      </div>
+      <div class="navbar-end">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">Account</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item">Account profile</a>
+            <a class="navbar-item">Logout</a>
+          </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
 {% block content %}
 {% endblock content %}
   </body>
