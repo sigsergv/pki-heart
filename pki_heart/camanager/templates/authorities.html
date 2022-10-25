@@ -1,0 +1,31 @@
+{% extends "cabase.html" %}
+
+{% block title %}CA manager{% endblock %}
+
+{% block camanagercontent %}
+<div>
+  <nav class="breadcrumb">
+    <ul>
+      <li class="is-active"><a>Certification Authorities</a></li>
+    </ul>
+  </nav>
+</div>
+
+<div>
+  <nav class="navbar" role="navigation">
+    <div class="navbar-menu">
+      <div class="navbar-start">
+        <div class="navbar-item">
+          <div class="buttons">
+            <a href="/ca/authorities/create" class="button is-primary"><strong>New CA</strong></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<div class="content">
+</div>
+
+{% endblock %}

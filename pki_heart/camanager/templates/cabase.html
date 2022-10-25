@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block appcontent %}
+<div class="columns" id="camanager-app">
+  <aside class="is-sidebar menu is-fullheight">
+    <p class="menu-label">General</p>
+    <ul class="menu-list">
+      <a href="/ca" class="item {% if active_section == "overview" %}is-active{% endif %}">Overview</a>
+      <li><a href="/ca/authorities" class="{% if active_section == "authorities" %}is-active{% endif %}">Certification Authorities</a></li>
+      <li><a href="/ca/profiles" class="{% if active_section == "profiles" %}is-active{% endif %}">Profiles</a></li>
+      <li><a href="/ca/certificates" class="{% if active_section == "certificates" %}is-active{% endif %}">Certificates</a></li>
+    </ul>
+  </aside>
+   <div class="column is-rest messages hero is-fullheight" id="camanager-content">
+    <div>
+{% block camanagercontent %}
+{% endblock camanagercontent %}
+    </div>
+  </div>
+</div>
+{% endblock %}

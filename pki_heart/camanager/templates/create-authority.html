@@ -1,0 +1,31 @@
+{% extends "cabase.html" %}
+
+{% block title %}CA manager{% endblock %}
+
+{% block camanagercontent %}
+<div>
+  <nav class="breadcrumb">
+    <ul>
+      <li><a href="/ca/authorities">Certification Authorities</a></li>
+      <li class="is-active"><a>New CA</a></li>
+    </ul>
+  </nav>
+</div>
+
+
+<div class="content">
+  <form method="POST" action="/ca/authorities/create" id="{{ form_id }}">
+    {% csrf_token %}
+    {{ form }}
+    <div class="field is-grouped">
+      <div class="control">
+        <button class="button is-link" onclick="submit_ajax_form('{{ form_id }}'); return false;">Submit</button>
+      </div>
+      <div class="control">
+        <button class="button is-link is-light">Cancel</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

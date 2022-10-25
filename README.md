@@ -73,7 +73,7 @@ This section is temporary and will be deleted later.
 `pg_config` must be in PATH.
 
     $ pip install wheel
-    $ pip install Django==4.1.1 psycopg2==2.9.4
+    $ pip install Django==4.1.1 psycopg2==2.9.4 django-widget-tweaks==1.4.12
     $ django-admin startproject pki_heart
     $ cd pki_heart
     $ python3 manage.py runserver

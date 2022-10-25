@@ -4,21 +4,23 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/static/global/css/bulma.min.css">
-    <link rel="stylesheet" href="/static/global/css/global.css">
+    <link rel="stylesheet" href="/static/global/css/bulma-0.9.4.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/global/css/global.css">
+    <script src="/static/global/js/jquery-3.6.1.min.js"></script>
+    <script src="/static/global/js/global.js"></script>
     <title>{% block title %}{% endblock %} — PKI Heart</title>
   </head>
   <body>
   <nav class="navbar has-shadow">
     <div class="container">
       <div class="navbar-brand">
-        <a class="navbar-item pkih-navbar-brand" href="/ca">PKI H<x class="pkih-em">e</x>art</a>
+        <a class="navbar-item pkih-navbar-brand" href="/ca">PKI H<span class="pkih-em">e</span>art</a>
       </div>
       <div class="navbar-end">
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link">Account</a>
           <div class="navbar-dropdown">
-            <a class="navbar-item">Account profile</a>
+            <a class="navbar-item">Profile</a>
             <a class="navbar-item">Logout</a>
           </div>
           </a>
@@ -26,8 +28,14 @@
       </div>
     </div>
   </nav>
-{% block content %}
-{% endblock content %}
+{% block appcontent %}
+{% endblock appcontent %}
+  <div id="global-modal-overlay" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <div class="box" id="global-modal-overlay-content"></div>
+    </div>
+  </div>
   </body>
 </html>
 
