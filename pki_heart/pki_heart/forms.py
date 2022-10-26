@@ -49,7 +49,10 @@ def make_field_id(name):
 def render_attrs(attrs):
     html = ''
     for k,v in attrs.items():
-        html += ' {k}="{v}"'.format(k=k, v=v)
+        if v is None:
+            html = ' {k}'.format(k=k)
+        else:
+            html += ' {k}="{v}"'.format(k=k, v=v)
     return html
 
 def bulma_render_form(form):
@@ -68,6 +71,14 @@ def bulma_render_form(form):
             field_attrs = {
                 'id': field_id
             }
+            v = getattr(field, 'max_length', None)
+            if isinstance(v, int) and v > 0:
+                field_attrs['maxlength'] = str(v)
+
+            v = getattr(field, 'required')
+            if v == True:
+                field_attrs['required'] = None
+
             container = BULMA_COMMON_FIELD_CONTAINER
             if widget_class == 'TextInput':
                 control = '<div class="control"><input class="input" type="text" name="{name}"{field_attrs}></div>'
@@ -75,6 +86,10 @@ def bulma_render_form(form):
                 control = '<div class="control"><textarea class="textarea" name="{name}"{field_attrs}></textarea></div>'
             elif widget_class == 'CheckboxInput':
                 container = BULMA_CHECKBOX_FIELD_CONTAINER
+                try:
+                    del field_attrs['required']
+                except KeyError:
+                    pass
                 control = '<input type="checkbox" name="{name}"{field_attrs}>'
             else:
                 control = 'NOT SUPPORTED WIDGET CLASS {0}'.format(widget_class)

@@ -14,12 +14,12 @@
 
 
 <div class="content">
-  <form method="POST" action="/ca/authorities/create" id="{{ form_id }}">
+  <form method="POST" action="/ca/authorities/create" id="{{ form_id }}" onsubmit="submit_ajax_form('{{ form_id }}'); return false;">
     {% csrf_token %}
     {{ form }}
     <div class="field is-grouped">
       <div class="control">
-        <button class="button is-link" onclick="submit_ajax_form('{{ form_id }}'); return false;">Submit</button>
+        <button class="button is-link">Submit</button>
       </div>
       <div class="control">
         <button class="button is-link is-light">Cancel</button>
