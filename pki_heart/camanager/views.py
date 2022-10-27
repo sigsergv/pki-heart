@@ -8,17 +8,18 @@ from .models import CertificationAuthority
 from pki_heart.forms import bulma_render_form, bulma_render_form_submit
 
 
-@login_required()
+@login_required
 def index(request):
-    template = loader.get_template('index.html')
+    template = loader.get_template('camanager/index.html')
     context = {
         'active_section': 'overview'
     }
     return HttpResponse(template.render(context, request))
 
 
+@login_required
 def authorities(request):
-    template = loader.get_template('authorities.html')
+    template = loader.get_template('camanager/authorities.html')
     items = CertificationAuthority.objects.all()
     authorities = []
     for x in items:
@@ -33,6 +34,7 @@ def authorities(request):
     return HttpResponse(template.render(context, request))
 
 
+@login_required
 def create_authority(request):
     if request.method == 'POST':
         form = CertificationAuthorityForm(request.POST)
@@ -40,11 +42,11 @@ def create_authority(request):
             return JsonResponse(bulma_render_form_submit(form))
         else:
             authority = CertificationAuthority(name = form.cleaned_data['name'],
-                description = form.cleaned_data['description'])
+                description = form.cleaned_data['description'], owner = request.user)
             authority.save()
             return JsonResponse({'success': True, 'redirect': '/ca/authorities'})
     else:
-        template = loader.get_template('create-authority.html')
+        template = loader.get_template('camanager/create-authority.html')
         form = CertificationAuthorityForm()
         context = {
             'active_section': 'authorities',
@@ -54,6 +56,7 @@ def create_authority(request):
         return HttpResponse(template.render(context, request))
 
 
+@login_required
 def delete_authority(request):
     ids = []
     for x in request.POST.getlist('ids'):

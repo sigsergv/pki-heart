@@ -11,6 +11,13 @@ html, body {
 .pkih-form-error-block p {
     margin-bottom: 0 !important;
 }
+.pkih-login-form {
+    width: 400px;
+    margin-top: 50px;
+}
+.pkih-top-navbar {
+    padding-right: 15px;
+}
 .is-sidebar {
     width: 250px;
 }

@@ -50,7 +50,7 @@ def render_attrs(attrs):
     html = ''
     for k,v in attrs.items():
         if v is None:
-            html = ' {k}'.format(k=k)
+            html += ' {k}'.format(k=k)
         else:
             html += ' {k}="{v}"'.format(k=k, v=v)
     return html
@@ -62,25 +62,25 @@ def bulma_render_form(form):
         bf = form[name]
         field = bf.field
         widget_class = type(field.widget).__name__
+        value = 'xxx'
         if bf.is_hidden:
-            # hidden_fields += 
-            pass
+            control = '<input type="hidden" name="{name}" value="{value}">'
+            hidden_fields += control.format(name=name, value=bf.value())
         else:
+            print(field.widget.attrs)
             control = 'CONTROL'
             field_id = make_field_id(name)
-            field_attrs = {
-                'id': field_id
-            }
-            v = getattr(field, 'max_length', None)
-            if isinstance(v, int) and v > 0:
-                field_attrs['maxlength'] = str(v)
+            field_attrs = dict(field.widget.attrs)
+            field_attrs['id'] = field_id
 
             v = getattr(field, 'required')
             if v == True:
                 field_attrs['required'] = None
 
             container = BULMA_COMMON_FIELD_CONTAINER
-            if widget_class == 'TextInput':
+            if widget_class == 'PasswordInput':
+                control = '<div class="control"><input class="input" type="password" name="{name}"{field_attrs}></div>'
+            elif widget_class == 'TextInput':
                 control = '<div class="control"><input class="input" type="text" name="{name}"{field_attrs}></div>'
             elif widget_class == 'Textarea':
                 control = '<div class="control"><textarea class="textarea" name="{name}"{field_attrs}></textarea></div>'
@@ -97,7 +97,7 @@ def bulma_render_form(form):
             control = control.format(name=name, field_attrs=render_attrs(field_attrs))
 
             fields += container.format(label=field.label, control=control, field_id=field_id)
-    return format_html(hidden_fields + fields)
+    return format_html(hidden_fields + '\n' + fields)
 
 
 def bulma_render_form_submit(form):
@@ -116,3 +116,4 @@ def bulma_render_form_submit(form):
                 'error_text': x
                 })
     return resp
+

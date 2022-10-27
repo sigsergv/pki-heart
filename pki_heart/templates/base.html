@@ -11,23 +11,35 @@
     <title>{% block title %}{% endblock %} — PKI Heart</title>
   </head>
   <body>
-  <nav class="navbar has-shadow">
-    <div class="container">
-      <div class="navbar-brand">
-        <a class="navbar-item pkih-navbar-brand" href="/ca">PKI H<span class="pkih-em">e</span>art</a>
-      </div>
-      <div class="navbar-end">
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link">Account</a>
-          <div class="navbar-dropdown">
-            <a class="navbar-item">Profile</a>
-            <a class="navbar-item">Logout</a>
+  <nav class="level pkih-top-navbar">
+    <!-- Left side -->
+    <div class="level-left">
+      <a class="navbar-item pkih-navbar-brand" href="/ca">PKI H<span class="pkih-em">e</span>art</a>
+    </div>
+    <!-- Right side -->
+    <div class="level-right">
+      {% if user.is_authenticated %}
+      <div class="dropdown">
+        <div class="dropdown-trigger">
+          <button class="button">
+            <span>{{ user.username }} ▽</span>
+          </button>
+        </div>
+        <div class="dropdown-menu" id="dropdown-menu" role="menu">
+          <div class="dropdown-content">
+            <a href="/accounts/profile" class="dropdown-item">
+              Profile
+            </a>
+            <a class="dropdown-item" onclick="do_logout('{{ csrf_token }}'); return false;">
+              Logout
+            </a>
           </div>
-          </a>
         </div>
       </div>
+      {% endif %}
     </div>
   </nav>
+
 {% block appcontent %}
 {% endblock appcontent %}
   <div id="global-modal-overlay" class="modal">

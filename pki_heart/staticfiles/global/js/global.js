@@ -137,10 +137,43 @@ window.grid_delete_selected = function(tableId)
 }
 
 
+window.do_logout = function(csrfToken)
+{
+    $.ajax({
+        type: 'POST',
+        url: '/accounts/logout',
+        traditional: true,
+        data: {
+            csrfmiddlewaretoken: csrfToken,
+        },
+        success: function() {
+            location.reload();
+        },
+        error: function() {
+        }
+    });
+}
+
+
 // add event listener to close all modal marked as "pkih-modal-esc-close"
 $(document).ready(function() {
+    $('.dropdown-trigger').on('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        $(this).closest('.dropdown').toggleClass('is-active');
+    });
+    $('body').on('click', function() {
+        let dropdowns = $('.dropdown');
+        if (dropdowns.length) {
+            dropdowns.removeClass('is-active');
+        }
+    });
     $(this).keydown(function(e) {
         if (e.keyCode == 27) {  // Esc
+            let dropdowns = $('.dropdown');
+            if (dropdowns.length) {
+                dropdowns.removeClass('is-active');
+            }
             let modals = $('.pkih-modal-esc-close');
             if (modals.length) {
                 e.preventDefault();

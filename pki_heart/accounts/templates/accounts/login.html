@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Authentication{% endblock %}
+
+{% block appcontent %}
+
+{% if form.errors %}
+  <div class="alert alert-danger mt-5 text-center" role="alert">
+      Your username and password didn't match. Please try again.
+  </div>
+{% endif %}
+
+
+<div class="container pkih-login-form">
+  <div class="content">
+    <h1>Authentication</h1>
+  </div>
+  <form method="POST" action="{% url 'login' %}" id="{{ form_id }}" onsubmit="submit_ajax_form('{{ form_id }}'); return false;">
+    {% csrf_token %}
+    {{ form }}
+    <!--<div class="field">
+      <label class="label" for="id-login">Login</label>
+      <div class="control">
+        <input class="input" type="text" name="login" id="id-login">
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label" for="id-password">Password</label>
+      <div class="control">
+        <input class="input" type="password" name="password" id="id-password">
+      </div>
+    </div>-->
+
+    <div class="control">
+      <button class="button is-primary">Login</button>
+    </div>
+
+  </form>
+</div>
+
+{% endblock appcontent %}
