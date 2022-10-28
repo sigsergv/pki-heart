@@ -15,13 +15,18 @@
 
 <div class="content">
   <h3>{{ certificate.name }}</h3>
-  <div>
+  <div class="pkih-buttons-bar">
     <a href="{% url 'edit_authority_ca_cert' authority.id certificate.id %}" class="button is-primary is-small"><strong>Edit certificate</strong></a>
   </div>
 {% if certificate.description %}
+  <div class="notification">
   <p>{{ certificate.description }}</p>
+  </div>
+{% endif %}
+{% if certificate.allow_issue %}
+  <div class="notification"><span class="icon has-text-success"><i class="fas fa-certificate"></i></span> This certificate can be used to issue client certificates. You can change this by editing certificate and unchecking field <i>Allow issuing new client certificates</i>.</div>
 {% else %}
-  <p><i>No description</i></p>
+  <div class="notification is-warning is-light"><span class="icon"><i class="fas fa-certificate"></i></span> This certificate CANNOT be used to issue client certificates. You can change this by editing certificate and checking field <i>Allow issuing new client certificates</i>.</div>
 {% endif %}
 </div>
 

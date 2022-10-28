@@ -18,6 +18,9 @@ html, body {
 .pkih-top-navbar {
     padding-right: 15px;
 }
+.pkih-buttons-bar {
+    margin: 0 0 1rem 0;
+}
 .is-sidebar {
     width: 250px;
 }

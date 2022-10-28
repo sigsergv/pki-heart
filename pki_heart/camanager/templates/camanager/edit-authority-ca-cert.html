@@ -14,22 +14,20 @@
   </nav>
 </div>
 
-<div class="content">
-  <div class="notification is-info is-light">You can edit only descriptive fields of the certificate.</div>
+<div class="notification is-info is-light">Some certificate properties can only be set during certificate generation and cannot be modified later.</div>
 
-  <form method="POST" action="{% url 'edit_authority_ca_cert' authority.id certificate.id %}" id="{{ form_id }}" onsubmit="submit_ajax_form('{{ form_id }}'); return false;">
-    {% csrf_token %}
-    {{ form }}
-    <div class="field is-grouped">
-      <div class="control">
-        <button class="button is-link">Submit</button>
-      </div>
-      <div class="control">
-        <button class="button is-link is-light">Cancel</button>
-      </div>
+<form method="POST" action="{% url 'edit_authority_ca_cert' authority.id certificate.id %}" id="{{ form_id }}" onsubmit="submit_ajax_form('{{ form_id }}'); return false;">
+  {% csrf_token %}
+  {{ form }}
+  <div class="field is-grouped">
+    <div class="control">
+      <button class="button is-link">Submit</button>
     </div>
-  </form>
-</div>
+    <div class="control">
+      <button class="button is-link is-light">Cancel</button>
+    </div>
+  </div>
+</form>
 
 
 {% endblock %}

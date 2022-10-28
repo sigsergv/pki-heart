@@ -26,8 +26,9 @@ class NewCACertForm(forms.Form):
 
 
 class EditCACertForm(forms.Form):
-    name = forms.CharField(label='Certification authority name',  max_length=200, required=True)
+    name = forms.CharField(label='Certificate name',  max_length=200, required=True)
     description = forms.CharField(widget=forms.Textarea(attrs={'rows':'3'}), label='Description', max_length=2048, required=False)
+    allow_issue = forms.BooleanField(label='Allow issuing new client certificates', required=False)
 
     hints = {
         'name': 'Descriptive human readable name.',

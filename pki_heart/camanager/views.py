@@ -182,7 +182,7 @@ def create_authority_ca_cert(request, authority_id):
             return JsonResponse({'success': True, 'redirect': reverse('show_authority_ca_cert', args=[authority.id, certificate.id])})
     else:
         template = loader.get_template('camanager/create-authority-ca-cert.html')
-        form = NewCACertForm()
+        form = NewCACertForm(initial={'allow_issue': True})
         context = {
             'active_section': 'authorities',
             'authority': authority,
@@ -234,6 +234,7 @@ def edit_authority_ca_cert(request, authority_id, certificate_id):
             try:
                 certificate.name = data['name']
                 certificate.description = data['description']
+                certificate.allow_issue = data['allow_issue']
                 certificate.save()
             except IntegrityError:
                 form.add_error('name', 'Certificate with the same name already exists.')
@@ -244,7 +245,8 @@ def edit_authority_ca_cert(request, authority_id, certificate_id):
         template = loader.get_template('camanager/edit-authority-ca-cert.html')
         form = EditCACertForm(initial={
             'name': certificate.name,
-            'description': certificate.description
+            'description': certificate.description,
+            'allow_issue': certificate.allow_issue
             })
         context = {
             'active_section': 'authorities',

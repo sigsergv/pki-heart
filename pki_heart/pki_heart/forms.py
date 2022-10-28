@@ -43,7 +43,7 @@ BULMA_CHECKBOX_FIELD_CONTAINER = '''<div class="field">
         </label>
     </div>
     {hint}
-'''
+</div>'''
 
 BULMA_FIELD_HINT = '<p class="help is-info">{text}</p>'
 
@@ -53,7 +53,7 @@ def make_field_id(name):
 def render_attrs(attrs):
     html = ''
     for k,v in attrs.items():
-        if v is None:
+        if v == True:
             html += ' {k}'.format(k=k)
         else:
             html += ' {k}="{v}"'.format(k=k, v=v)
@@ -82,7 +82,7 @@ def bulma_render_form(form):
 
             v = getattr(field, 'required')
             if v == True:
-                field_attrs['required'] = None
+                field_attrs['required'] = True
 
             container = BULMA_COMMON_FIELD_CONTAINER
             if widget_class == 'PasswordInput':
@@ -99,11 +99,14 @@ def bulma_render_form(form):
                     options += '<option value="{value}">{label}</option>'.format(value=option_value, label=option_label)
                 control += options.replace('{', '{{').replace('}', '}}') + '</select></div>'
             elif widget_class == 'CheckboxInput':
+                field_attrs['value'] = 'true'
                 container = BULMA_CHECKBOX_FIELD_CONTAINER
                 try:
                     del field_attrs['required']
                 except KeyError:
                     pass
+                if value == True:
+                    field_attrs['checked'] = True
                 control = '<input type="checkbox"{field_attrs}>'
             else:
                 control = 'NOT SUPPORTED WIDGET CLASS {0}'.format(widget_class)

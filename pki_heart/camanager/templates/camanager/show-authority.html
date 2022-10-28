@@ -14,13 +14,13 @@
 
 <div class="content">
   <h3>{{ authority.name }}</h3>
-  <div>
+  <div class="pkih-buttons-bar">
     <a href="{% url 'edit_authority' authority.id %}" class="button is-primary is-small"><strong>Edit authority</strong></a>
   </div>
 {% if authority.description %}
+  <div class="notification">
   <p>{{ authority.description }}</p>
-{% else %}
-  <p><i>No description</i></p>
+  </div>
 {% endif %}
 </div>
 
