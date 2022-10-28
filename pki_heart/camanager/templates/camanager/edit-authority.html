@@ -1,20 +1,20 @@
 {% extends "camanager/cabase.html" %}
 
-{% block title %}CA manager{% endblock %}
+{% block title %}Edit authority{% endblock %}
 
 {% block camanagercontent %}
 <div>
   <nav class="breadcrumb">
     <ul>
       <li><a href="{% url 'authorities' %}">Certification Authorities</a></li>
-      <li class="is-active"><a>New CA</a></li>
+      <li><a href="{% url 'show_authority' authority.id %}">{{ authority.name }}</a></li>
+      <li class="is-active"><a>Edit authority</a></li>
     </ul>
   </nav>
 </div>
 
-
 <div class="content">
-  <form method="POST" action="{% url 'create_authority' %}" id="{{ form_id }}" onsubmit="submit_ajax_form('{{ form_id }}'); return false;">
+  <form method="POST" action="{% url 'edit_authority' authority.id %}" id="{{ form_id }}" onsubmit="submit_ajax_form('{{ form_id }}'); return false;">
     {% csrf_token %}
     {{ form }}
     <div class="field is-grouped">

@@ -1,0 +1,46 @@
+{% extends "camanager/cabase.html" %}
+
+{% block title %}Authority{% endblock %}
+
+{% block camanagercontent %}
+<div>
+  <nav class="breadcrumb">
+    <ul>
+      <li><a href="{% url 'authorities' %}">Certification Authorities</a></li>
+      <li class="is-active"><a>Authority</a></li>
+    </ul>
+  </nav>
+</div>
+
+<div class="content">
+  <h3>{{ authority.name }}</h3>
+  <div>
+    <a href="{% url 'edit_authority' authority.id %}" class="button is-primary is-small"><strong>Edit authority</strong></a>
+  </div>
+{% if authority.description %}
+  <p>{{ authority.description }}</p>
+{% else %}
+  <p><i>No description</i></p>
+{% endif %}
+</div>
+
+<div class="content">
+  <h3>CA Certificates</h3>
+
+  <div>
+    <a href="{% url 'create_authority_ca_cert' authority.id %}" class="button is-primary is-small"><strong>New Certificate</strong></a>
+    <button class="button is-danger is-small" onclick="grid_delete_selected('ca-certs-grid')"><strong>Delete selected</strong></button>
+  </div>
+
+  <table class="table is-striped is-fullwidth" id="certificates-grid" data-url="{% url 'delete_authority' %}" data-csrf-token="{{ csrf_token }}">
+    {% for x in certificates %}
+    <tr>
+      <td><input type="checkbox" value="{{ x.id }}"> <a href="{% url 'show_authority_ca_cert' authority.id x.id %}">{{ x.name }}</a></td>
+      {# <td><a href="{% url 'authorities' %}/create" class="button is-small is-red">delete</a></td> #}
+    </tr>
+    {% endfor %}
+  </table>
+
+</div>
+
+{% endblock %}

@@ -5,7 +5,7 @@ from django.template import loader
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 
 from .forms import LoginForm
-from pki_heart.forms import bulma_render_form, bulma_render_form_submit
+from pki_heart.forms import bulma_render_form, bulma_render_form_submit_error
 
 
 @login_required
@@ -21,7 +21,7 @@ def login(request):
         redirect_url = request.POST.get('redirect', '/ca')
         form = LoginForm(request.POST)
         if not form.is_valid():
-            return JsonResponse(bulma_render_form_submit(form))
+            return JsonResponse(bulma_render_form_submit_error(form))
         else:
             # perform authentication here
             username = request.POST.get('username', '')
@@ -32,7 +32,7 @@ def login(request):
                 return JsonResponse({'success': True, 'redirect': redirect_url})
             else:
                 form.add_error('username', 'Incorrect username or password')
-                return JsonResponse(bulma_render_form_submit(form))
+                return JsonResponse(bulma_render_form_submit_error(form))
     else:
         redirect_url = request.GET.get('redirect', '/ca')
         form = LoginForm()

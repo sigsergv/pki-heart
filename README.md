@@ -2,19 +2,25 @@
 
 ## Development mode
 
-By default it's assuming you are working in project root directory.
+By default it's assuming you are working in project root directory with files `README.md` and `requirements.txt`.
 
-*PKI Heart* is written on python3 and doesn't support python version 2 or python3 version lesser than 3.8.
+*PKI Heart* is written in python3 and doesn't support python version 2 or python3 version lesser than 3.8.
+
+We use postresql for both development and production so you need to install this database server first. On Linux use your
+distribution commands like `apt install postgresql`, on Macos install [Postgres.app](https://postgresapp.com).
 
 *PKI Heart* uses venv for development, so initialize it first and verify:
 
     $ python3 -m venv .venv
     $ source .venv/bin/activate
-    $ command -v pip python3
-    /Users/serge/projects/pki-heart/.venv/bin/pip
+    $ command -v python3
     /Users/serge/projects/pki-heart/.venv/bin/python3
+    $ python3 -m pip --version
+    pip 22.2.2 from /Users/serge/projects/pki-heart/.venv/lib/python3.10/site-packages/pip (python 3.10)
+    $ python3 -m pip install wheel
+    $ python3 -m pip install -r requirements.txt 
 
-We use postresql for both development and production. 
+If you are using Macos please read section [Macos notes](#macos-notes) how to setup postgres properly.
 
 Create postresql user:
 
@@ -60,30 +66,20 @@ Initialize database:
     $ cd pki_heart
     $ python3 manage.py migrate
 
-Configure superadmin (for django admin site):
+We do not use django admin and superuser so you are don't need to configure them.
 
-    $ python manage.py createsuperuser
-
-
-
-## Initial project setup
-
-This section is temporary and will be deleted later.
-
-`pg_config` must be in PATH.
-
-    $ pip install wheel
-    $ pip install Django==4.1.1 psycopg2==2.9.4 django-widget-tweaks==1.4.12
-    $ django-admin startproject pki_heart
-    $ cd pki_heart
-    $ python3 manage.py runserver
-    $ python3 manage.py startapp admin
-
+Default user login name is `admin` and password is `setup`.
 
 ## Macos notes
 
+By default postgresql commands like `createdb` or `psql` are not available inside terminal shell session. You can follow
+instructions on site <https://postgresapp.com> to add them permanently or use command below to enable for current shell
+session only:
+
+    $ export PATH=/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH
+
 By default Postgres.app allows connections to databases without authentication, if you want to enable security
-you must open configuration file `hba.conf` and explicitly set access up like this:
+you must open configuration file `hba.conf` in text editor and explicitly set access up like this:
 
     # TYPE  DATABASE        USER            ADDRESS                 METHOD
 

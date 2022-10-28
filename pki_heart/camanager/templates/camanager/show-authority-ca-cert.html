@@ -1,0 +1,28 @@
+{% extends "camanager/cabase.html" %}
+
+{% block title %}Certificate{% endblock %}
+
+{% block camanagercontent %}
+<div>
+  <nav class="breadcrumb">
+    <ul>
+      <li><a href="{% url 'authorities' %}">Certification Authorities</a></li>
+      <li><a href="{% url 'show_authority' authority.id %}">{{ authority.name }}</a></li>
+      <li class="is-active"><a>CA Certificate</a></li>
+    </ul>
+  </nav>
+</div>
+
+<div class="content">
+  <h3>{{ certificate.name }}</h3>
+  <div>
+    <a href="{% url 'edit_authority_ca_cert' authority.id certificate.id %}" class="button is-primary is-small"><strong>Edit certificate</strong></a>
+  </div>
+{% if certificate.description %}
+  <p>{{ certificate.description }}</p>
+{% else %}
+  <p><i>No description</i></p>
+{% endif %}
+</div>
+
+{% endblock %}

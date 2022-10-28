@@ -12,17 +12,16 @@
 </div>
 
 <div>
-  <a href="/ca/authorities/create" class="button is-primary is-small"><strong>New CA</strong></a>
+  <a href="{% url 'authorities' %}/create" class="button is-primary is-small"><strong>New CA</strong></a>
   <button class="button is-danger is-small" onclick="grid_delete_selected('autorities-grid')"><strong>Delete selected</strong></button>
 </div>
 
-
 <div class="content">
-  <table class="table is-striped is-fullwidth" id="autorities-grid" data-url="/ca/authorities/delete" data-csrf-token="{{ csrf_token }}">
+  <table class="table is-striped is-fullwidth" id="autorities-grid" data-url="{% url 'delete_authority' %}" data-csrf-token="{{ csrf_token }}">
     {% for x in authorities %}
     <tr>
-      <td><input type="checkbox" value="{{ x.id }}"> <a href="/ca/authorities/{{ x.id }}">{{ x.name }}</a></td>
-      {# <td><a href="/ca/authorities/create" class="button is-small is-red">delete</a></td> #}
+      <td><input type="checkbox" value="{{ x.id }}"> <a href="{% url 'show_authority' x.id %}">{{ x.name }}</a></td>
+      {# <td><a href="{% url 'authorities' %}/create" class="button is-small is-red">delete</a></td> #}
     </tr>
     {% endfor %}
   </table>

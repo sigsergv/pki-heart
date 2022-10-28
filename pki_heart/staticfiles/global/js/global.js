@@ -42,16 +42,20 @@ function confirmation_modal_dialog(text, cb, yesTitle, cancelTitle)
     });
 }
 
-function form_message_failure(formId, message)
+function form_message_failure(formId, messages)
 {
     // create message box, prepend it before form and scroll to it
     var msgElId = formId + '-failure-msg';
     var msgEl = $('#' + msgElId);
     if (msgEl.length == 0) {
-        var msgEl = $('<article class="message is-warning" id="' + msgElId + '"><div class="message-body">xxx</div></article>');
+        var msgEl = $('<article class="message is-warning" id="' + msgElId + '"><div class="message-body"></div></article>');
     }
     var bodyEl = msgEl.find('.message-body');
-    bodyEl.text(message);
+    bodyEl.empty();
+    $.each(messages, function(_index, msg) {
+        var el = $('<p></p>').text(msg);
+        bodyEl.append(el);
+    });
     var form = $('#' + formId);
     msgEl.insertBefore(form);
 }
@@ -73,24 +77,35 @@ window.submit_ajax_form = function (formId) {
             } else {
                 // parse error messages
                 let fieldErrorBlocks = {};
+                let nonFieldErrors = [];
                 $.each(json.errors, function(_index, item) {
                     var fieldName = item.field;
-                    if (!fieldErrorBlocks[fieldName]) {
-                        let fieldEl = $('#' + item.field_id);
-                        let fieldBlock = fieldEl.closest('div.field');
-                        let fieldErrorEl = $('<p class="help is-danger pkih-form-error-block"></p>');
-                        fieldBlock.append(fieldErrorEl);
-                        fieldErrorBlocks[fieldName] = fieldErrorEl;
+                    if (fieldName == '') {
+                        nonFieldErrors.push(item.error_text);
+                    } else {
+                        if (!fieldErrorBlocks[fieldName]) {
+                            let fieldEl = $('#' + item.field_id);
+                            let fieldBlock = fieldEl.closest('div.field');
+                            let fieldErrorEl = $('<p class="help is-danger pkih-form-error-block"></p>');
+                            fieldBlock.append(fieldErrorEl);
+                            fieldErrorBlocks[fieldName] = fieldErrorEl;
+                        }
+                        var errorEl = $('<p></p>').text(item.error_text);
+                        fieldErrorBlocks[fieldName].append(errorEl);
                     }
-                    var errorEl = $('<p></p>').text(item.error_text);
-                    fieldErrorBlocks[fieldName].append(errorEl);
                 });
-                form_message_failure(formId, 'Form processing error.');
+                let globalMessages = ['Form processing error.'];
+                if (nonFieldErrors.length) {
+                    $.each(nonFieldErrors, function(_index, item) {
+                        globalMessages.push(item);
+                    });
+                }
+                form_message_failure(formId, globalMessages);
             }
         },
         error: function(jqXHR, textStatus) {
             close_global_modal_overlay();
-            form_message_failure(formId, 'Server query failed.');
+            form_message_failure(formId, ['Server query failed.']);
         }
     });
 }
